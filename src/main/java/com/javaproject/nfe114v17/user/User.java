@@ -27,13 +27,20 @@ public class User {
     @JsonProperty("password")
     private String password;
 
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "user_movie_favorite",
+            joinColumns = { @JoinColumn(name = "userId") },
+            inverseJoinColumns = { @JoinColumn(name = "movieId") }
+    )
+    private Set<Movie> seenMovies;
 //    @OneToMany(targetEntity = Movie.class,
 //            mappedBy = "user",
 //            cascade = CascadeType.ALL,
 //            orphanRemoval = true
 //    )
 //    @JoinColumn(name="um_fk", referencedColumnName = "userId")
-//    private Set<Movie> seenMovies;
+//    private ;
 //
 
 

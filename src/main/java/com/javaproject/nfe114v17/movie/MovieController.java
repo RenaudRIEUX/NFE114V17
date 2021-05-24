@@ -1,9 +1,14 @@
 package com.javaproject.nfe114v17.movie;
 
+import com.javaproject.nfe114v17.tmdbApi.NotFoundException;
+import com.javaproject.nfe114v17.tmdbApi.TmdbApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,10 +17,12 @@ import java.util.Optional;
 public class MovieController {
 
     private final MovieService movieService;
+    private final TmdbApiClient tmdbApiClient;
 
     @Autowired
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, TmdbApiClient tmdbApiClient) {
         this.movieService = movieService;
+        this.tmdbApiClient = tmdbApiClient;
     }
 
     @GetMapping
@@ -24,19 +31,35 @@ public class MovieController {
     }
 
     @GetMapping("/{movieId}")
-    public Movie getMovieById(@PathVariable Integer movieId) throws IOException, InterruptedException {
-        return movieService.getMovieById(movieId);
+    public ResponseEntity<Movie> getMovieById(@PathVariable Integer movieId) throws IOException, InterruptedException {
+        try {
+            Movie movieById = tmdbApiClient.getMovieById(movieId);
+            return new ResponseEntity<>(movieById, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<String> searchMovie(@RequestParam String query) throws IOException, InterruptedException{
+        try {
+            return new ResponseEntity<> (tmdbApiClient.searchMovie(query),  HttpStatus.OK);
+
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PostMapping
     public void addMovie(@RequestBody Movie movie) {
         movieService.addNewMovie(movie);
     }
 
-    @DeleteMapping(path = "delete/{movieId}")
+    @DeleteMapping(path = "/delete/{movieId}")
     public void deleteMovie(@PathVariable("movieId") int movieId) {
         movieService.deleteMovie(movieId);
-
     }
 
 

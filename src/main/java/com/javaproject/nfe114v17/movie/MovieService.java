@@ -36,22 +36,6 @@ public class MovieService {
 //        return optMovie.get();
 //    }
 
-    public Movie getMovieById(int movieId) throws IOException, InterruptedException{
-        String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=c58ffbbfcec3d00f132dc417fb260fb0";
-
-        HttpClient client = HttpClient.newHttpClient() ;
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .header("accept", "application/json")
-                .uri(URI.create(url))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JSR310Module());
-        Movie movie = mapper.readValue(response.body(), Movie.class);
-        return movie;
-    }
 
 
 

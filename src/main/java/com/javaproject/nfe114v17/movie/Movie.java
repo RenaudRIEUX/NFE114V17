@@ -42,7 +42,8 @@ public class Movie {
     private double vote_average;
     @JsonProperty("vote_count")
     private double vote_count;
-//    @JsonProperty("user")
+
+
 //    @ManyToOne
 //    @JoinColumn(name="userId")
 //    private User user;

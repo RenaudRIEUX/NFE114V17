@@ -1,9 +1,9 @@
 spring.datasource.url=jdbc:mysql://localhost:3306/movie
 spring.datasource.username=root
 spring.datasource.password=root
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
 spring.jpa.properties.hibernate.format_sql=true
 server.error.include-message=always
-tmdb.apikey=51d4f491f0b15fcf787865655b195387
+tmdb.apikey=
