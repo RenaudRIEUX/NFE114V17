@@ -3,34 +3,38 @@ package com.javaproject.nfe114v17.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.javaproject.nfe114v17.movie.Movie;
 import lombok.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 @Getter
 @Setter
 public class User {
-    //String name;
-    //String surname;
     @Id
-    @GeneratedValue
-    @JsonProperty("userid")
-    private int userid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("userId")
+    private int userId;
     @JsonProperty("login")
     private String login;
     @JsonProperty("password")
     private String password;
 
-    @OneToMany(targetEntity = Movie.class, cascade = CascadeType.ALL)
-    @JoinColumn(name="um_fk", referencedColumnName = "userid")
-    private List<Movie> seenMovies;
-
+//    @OneToMany(targetEntity = Movie.class,
+//            mappedBy = "user",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    @JoinColumn(name="um_fk", referencedColumnName = "userId")
+//    private Set<Movie> seenMovies;
+//
 
 
 

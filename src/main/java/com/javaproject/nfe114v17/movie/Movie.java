@@ -2,6 +2,7 @@ package com.javaproject.nfe114v17.movie;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.javaproject.nfe114v17.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,26 +21,31 @@ public class Movie {
 
     @Id
     @JsonProperty("movieId")
-    int movieId;
+    private int movieId;
     @JsonProperty("title")
-    String title;
+    private String title;
     @JsonProperty("adult")
-    boolean adult;
+    private boolean adult;
     @JsonProperty("budget")
-    long budget;
+    private long budget;
     @JsonProperty("popularity")
-    double popularity;
+    private double popularity;
     @JsonProperty("release_date")
-    LocalDate release_date;
+    private LocalDate release_date;
     @JsonProperty("revenue")
-    double revenue;
+    private double revenue;
     @JsonProperty("runtime")
-    int runtime;
+    private int runtime;
     @JsonProperty("status")
-    String status;
+    private String status;
     @JsonProperty("vote_average")
-    double vote_average;
+    private double vote_average;
     @JsonProperty("vote_count")
-    double vote_count;
+    private double vote_count;
+//    @JsonProperty("user")
+//    @ManyToOne
+//    @JoinColumn(name="userId")
+//    private User user;
+
 
 }
