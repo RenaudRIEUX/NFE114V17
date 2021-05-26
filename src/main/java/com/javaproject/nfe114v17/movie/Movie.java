@@ -20,33 +20,19 @@ import java.time.LocalDate;
 public class Movie {
 
     @Id
-    @JsonProperty("movieId")
+    @JsonProperty("id")
     private int movieId;
-    @JsonProperty("title")
     private String title;
-    @JsonProperty("adult")
     private boolean adult;
-    @JsonProperty("budget")
     private long budget;
-    @JsonProperty("popularity")
     private double popularity;
-    @JsonProperty("release_date")
     private LocalDate release_date;
-    @JsonProperty("revenue")
     private double revenue;
-    @JsonProperty("runtime")
     private int runtime;
-    @JsonProperty("status")
     private String status;
-    @JsonProperty("vote_average")
     private double vote_average;
-    @JsonProperty("vote_count")
     private double vote_count;
 
-
-//    @ManyToOne
-//    @JoinColumn(name="userId")
-//    private User user;
 
 
 }

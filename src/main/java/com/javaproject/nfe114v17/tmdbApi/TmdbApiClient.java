@@ -20,7 +20,8 @@ public class TmdbApiClient {
     }
 
     public Movie getMovieById(int movieId) throws IOException, InterruptedException, NotFoundException{
-        String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key="+apiKey;
+        String url = baseUrl + "/movie/" + movieId + "?api_key="+apiKey;
+        System.out.println(url);
 
         HttpClient client = buildClient();
 

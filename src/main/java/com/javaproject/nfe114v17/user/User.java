@@ -20,30 +20,20 @@ import java.util.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("userId")
     private int userId;
-    @JsonProperty("login")
     private String login;
-    @JsonProperty("password")
     private String password;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "user_movie_favorite",
+            name = "seen_movies",
             joinColumns = { @JoinColumn(name = "userId") },
             inverseJoinColumns = { @JoinColumn(name = "movieId") }
     )
     private Set<Movie> seenMovies;
-//    @OneToMany(targetEntity = Movie.class,
-//            mappedBy = "user",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    @JoinColumn(name="um_fk", referencedColumnName = "userId")
-//    private ;
-//
 
-
-
+    public void addMovie(Movie movie){
+        seenMovies.add(movie);
+    }
 
 }
