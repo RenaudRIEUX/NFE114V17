@@ -5,8 +5,16 @@
     <title>Hello Spring</title>
 </head>
 <tbody>
-<tr th:each="movie: ${movies}">
-    <td th:text="${movie.movieId}" />
+<tr th:each="attribute: ${movie}">
+    <li>
+        <td th:text="${movie.movieId}"></td>
+        <td th:text="${movie.title}"></td>
+    </li>
 </tr>
+
+<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">
+    <button type="submit">add as seen</button>
+</form>
+
 </tbody>
 </html>

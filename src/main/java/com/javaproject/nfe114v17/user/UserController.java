@@ -34,7 +34,12 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @PutMapping(path = "/{userId}/movie/{movieId}")
+//    @PutMapping(path = "/{userId}/movie/{movieId}")
+//    public void addSeenMovie (@PathVariable int userId, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
+//        userService.addSeenMovie(userId, movieId);
+//    }
+
+    @PostMapping(path = "/{userId}/movie/{movieId}")
     public void addSeenMovie (@PathVariable int userId, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
         userService.addSeenMovie(userId, movieId);
     }

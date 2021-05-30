@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -43,9 +40,18 @@ public class MovieController2 {
     public String searchMovie(HttpServletRequest request, Model model) throws IOException, InterruptedException, NotFoundException, JSONException {
         String query = request.getParameter("query");
         model.addAttribute("research", tmdbApiClient.searchMovie2(query));
-        //System.out.println(tmdbApiClient.searchMovie2(query));
         return "searchform";
     }
 
-
+    @RequestMapping(value = "movie/{movieId}", method = RequestMethod.GET)
+    public String getMovieById(@PathVariable String movieId, Model model) throws IOException, InterruptedException, NotFoundException {
+        try {
+            int parsedMovieId = Integer.parseInt(movieId);
+            Movie movieById = tmdbApiClient.getMovieById(parsedMovieId);
+            model.addAttribute("movie", movieById);
+        } catch (NotFoundException e) {
+            throw e;
+        }
+        return "movie";
+    }
 }

@@ -9,14 +9,16 @@
   <input type="text" name="query"/>
   <button type="submit">search</button>
 </form>
-
 <tbody>
 <tr th:each="movie: ${research}">
   <li>
     <td th:text="${movie.movieId}"></td>
     <td th:text="${movie.title}"></td>
+    <td th:text="${movie.movieId}"></td>
+    <td>
+      <a th:href="@{'/movie/' + ${movie.movieId}}">view</a>
+    </td>
   </li>
 </tr>
-
 </body>
 </html>
