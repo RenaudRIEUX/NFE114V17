@@ -26,12 +26,14 @@ public class Movie {
     private boolean adult;
     private long budget;
     private double popularity;
-    private LocalDate release_date;
+    //private LocalDate release_date;
     private double revenue;
     private int runtime;
     private String status;
     private double vote_average;
     private double vote_count;
+
+
 
 
 

@@ -27,18 +27,6 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-//    public Movie getMovieById(int movieId) {
-//        Optional<Movie> optMovie = movieRepository.findByMovieId(movieId);
-//        boolean exists=  movieRepository.existsById(movieId);
-//        if (!exists){
-//            throw new IllegalStateException("Movie with id +" + movieId + " does not exists");
-//        }
-//        return optMovie.get();
-//    }
-
-
-
-
     @PostMapping
     public void addNewMovie(Movie movie) {
 

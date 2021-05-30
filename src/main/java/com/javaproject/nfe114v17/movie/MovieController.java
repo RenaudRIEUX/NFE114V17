@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/movie")
@@ -25,10 +23,10 @@ public class MovieController {
         this.tmdbApiClient = tmdbApiClient;
     }
 
-    @GetMapping
-    public List<Movie> getMovie() {
-        return movieService.getMovie();
-    }
+//    @GetMapping
+//    public List<Movie> getMovie() {
+//        return movieService.getMovie();
+//    }
 
     @GetMapping("/{movieId}")
     public ResponseEntity<Movie> getMovieById(@PathVariable Integer movieId) throws IOException, InterruptedException {
@@ -38,19 +36,16 @@ public class MovieController {
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     @GetMapping("/search")
     public ResponseEntity<String> searchMovie(@RequestParam String query) throws IOException, InterruptedException{
         try {
             return new ResponseEntity<> (tmdbApiClient.searchMovie(query),  HttpStatus.OK);
-
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PostMapping
     public void addMovie(@RequestBody Movie movie) {
@@ -61,6 +56,5 @@ public class MovieController {
     public void deleteMovie(@PathVariable("movieId") int movieId) {
         movieService.deleteMovie(movieId);
     }
-
 
 }

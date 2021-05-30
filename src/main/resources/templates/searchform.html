@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello Spring</title>
+</head>
+<body>
+<form method="post" action="/search2">
+  <input type="text" name="query"/>
+  <button type="submit">search</button>
+</form>
+
+<tbody>
+<tr th:each="movie: ${research}">
+  <li>
+    <td th:text="${movie.movieId}"></td>
+    <td th:text="${movie.title}"></td>
+  </li>
+</tr>
+
+</body>
+</html>

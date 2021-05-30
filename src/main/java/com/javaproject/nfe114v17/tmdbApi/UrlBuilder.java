@@ -7,11 +7,6 @@ public class UrlBuilder {
     private StringBuilder params= new StringBuilder();
 
 
-
-
-    //String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key="+apiKey;
-    //String url = "https://api.themoviedb.org/3/search/movie/?api_key="+apiKey+"&query="+query;
-
     public UrlBuilder(String apiKey, String baseUrl) {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
@@ -27,7 +22,7 @@ public class UrlBuilder {
     }
 
     public String build(){
-        return baseUrl+route+"?apiKey="+apiKey+params.toString();
+        return baseUrl+route+"?api_key="+apiKey+params.toString();
 
     }
 
