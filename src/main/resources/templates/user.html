@@ -3,11 +3,12 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"> </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <head>
     <meta charset="UTF-8">
     <title>Hello Spring</title>
 </head>
+
 <header>
     <style>header{position:relative}</style>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -34,45 +35,17 @@
     </nav>
 </header>
 <tbody>
-
+<a href="/">home</a>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-
-
-<tr th:each="attribute: ${movie}">
+<tr th:each="attribute: ${user}">
     <li>
-        <td th:text="${movie.movieId}"></td>
-        <td th:text="${movie.title}"></td>
+        <tr th:each="movie: ${user.seenMovies}">
+        <li>
+            <td th:text="${movie.movieId}"></td>
+            <td th:text="${movie.title}"></td>
+        </li>
     </li>
 </tr>
-
-<!--<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <button type="submit">add as seen</button>-->
-<!--    <input onclick="window.location.href = '/';" type="submit" value="Submit request" />-->
-<!--    <input onclick="window.location.href = 'https://website.com/my-account';" type="submit" value="Submit request" />-->
-<!--</form>-->
-
-<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-
-<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}" target="dummyframe">
-    <input type="submit" value="add as seen" />
-</form>
-
-
-<!--<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <input onclick="redirect()" type="submit" value="Submit request" />-->
-<!--</form>-->
-<!--<button method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <button type="submit">add as seen</button>-->
-<!--</button>-->
-
-<!--<button method="post" type="button" class="btn btn-secondary" th:action="@{'/user/1/movie/' + ${movie.movieId}}">Secondary</button>-->
-
-
 </tbody>
-
 </html>

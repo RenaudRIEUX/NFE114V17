@@ -3,6 +3,7 @@ package com.javaproject.nfe114v17.user;
 import com.javaproject.nfe114v17.movie.Movie;
 import com.javaproject.nfe114v17.tmdbApi.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -24,10 +25,10 @@ public class UserController {
         return userService.getUser();
     }
 
-    @GetMapping(path = "/{userId}")
-    public User getUser(@PathVariable int userId) {
-        return userService.getUserById(userId);
-    }
+//    @GetMapping(path = "/{userId}")
+//    public User getUser(@PathVariable int userId) {
+//        return userService.getUserById(userId);
+//    }
 
     @PostMapping
     public void addMovie(@RequestBody User user) {
@@ -43,7 +44,10 @@ public class UserController {
     public void addSeenMovie (@PathVariable int userId, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
         userService.addSeenMovie(userId, movieId);
     }
-}
+
+
+
+    }
 
 
 
