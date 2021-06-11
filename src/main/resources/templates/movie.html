@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
@@ -24,8 +26,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user/1">Voir mes films vus</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/1/statistics">Statistiques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">logout</a>
+                    </li>
+
+
                 </ul>
-                <form method="post" class="d-flex" action="/search2">
+                <form method="post" class="d-flex" action="/search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"/>
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
@@ -34,44 +50,23 @@
     </nav>
 </header>
 <tbody>
-
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-
-
 <tr th:each="attribute: ${movie}">
-    <li>
-        <td th:text="${movie.movieId}"></td>
-        <td th:text="${movie.title}"></td>
-    </li>
-</tr>
+    <img th:src="'https://image.tmdb.org/t/p/original' + ${movie.poster_path}" width="200" height="200" class="img-thumbnail">
 
-<!--<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <button type="submit">add as seen</button>-->
-<!--    <input onclick="window.location.href = '/';" type="submit" value="Submit request" />-->
-<!--    <input onclick="window.location.href = 'https://website.com/my-account';" type="submit" value="Submit request" />-->
-<!--</form>-->
+    <h1 th:text="${movie.title}"></h1>
+    <li class="list-group-item"> Synopsys : <td th:text="${movie.overview}"></td></li>
 
-<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-
-<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}" target="dummyframe">
-    <input type="submit" value="add as seen" />
-</form>
+    <div th:if="${currentUser} != 'anonymousUser'">
+        <form  th:action="'/user/' + ${currentUser} + '/movie/' + ${movie.movieId}", method="POST" >
+            <label>add as seen</label>
+            <input type="submit" value="add as seen" />
+        </form>
 
 
-<!--<form method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <input onclick="redirect()" type="submit" value="Submit request" />-->
-<!--</form>-->
-<!--<button method="post" th:action="@{'/user/1/movie/' + ${movie.movieId}}">-->
-<!--    <button type="submit">add as seen</button>-->
-<!--</button>-->
 
-<!--<button method="post" type="button" class="btn btn-secondary" th:action="@{'/user/1/movie/' + ${movie.movieId}}">Secondary</button>-->
-
+    </div>
 
 </tbody>
 

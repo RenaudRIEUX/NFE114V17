@@ -25,8 +25,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user/1">Voir mes films vus</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/1/statistics">Statistiques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">logout</a>
+                    </li>
+
                 </ul>
-                <form method="post" class="d-flex" action="/search2">
+                <form method="post" class="d-flex" action="/search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query"/>
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
@@ -35,17 +49,14 @@
     </nav>
 </header>
 <tbody>
-<a href="/">home</a>
 <br>
 <br>
 <tr th:each="attribute: ${user}">
-    <li>
-        <tr th:each="movie: ${user.seenMovies}">
-        <li>
-            <td th:text="${movie.movieId}"></td>
+    <ul class="list-group" th:each="movie: ${user.seenMovies}">
+        <li class="list-group-item">
             <td th:text="${movie.title}"></td>
         </li>
-    </li>
-</tr>
+    </ul>
+
 </tbody>
 </html>

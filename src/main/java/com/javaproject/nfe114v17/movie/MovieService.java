@@ -31,10 +31,9 @@ public class MovieService {
     public void addNewMovie(Movie movie) {
 
         Optional<Movie> movieByTitle = movieRepository.findByTitle(movie.getTitle());
-        if (movieByTitle.isPresent()){
-            throw new IllegalStateException("movie taken");
+        if (!movieByTitle.isPresent()){
+            movieRepository.save(movie);
         }
-        movieRepository.save(movie);
     }
 
     public void deleteMovie(int movieId){

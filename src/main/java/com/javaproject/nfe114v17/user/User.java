@@ -12,7 +12,6 @@ import java.util.*;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table
 @Getter
@@ -21,8 +20,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    private String login;
+    private String userName;
     private String password;
+    private boolean active;
+    private String roles;
+
+
+
+    public User(String userName, String password) {
+        this.userId = 0;
+        this.userName = userName;
+        this.password = password;
+        this.active = true;
+        this.roles = "ADMIN";
+        this.seenMovies = null;
+    }
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -32,8 +44,48 @@ public class User {
     )
     private Set<Movie> seenMovies;
 
-    public void addMovie(Movie movie){
+    public void addSeenMovie(Movie movie){
         seenMovies.add(movie);
+    }
+
+    public int getId() {
+        return userId;
+    }
+
+    public void setId(int id) {
+        this.userId = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
 }

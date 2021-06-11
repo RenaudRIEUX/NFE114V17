@@ -1,16 +1,16 @@
 package com.javaproject.nfe114v17.user;
 
-import com.javaproject.nfe114v17.movie.Movie;
 import com.javaproject.nfe114v17.tmdbApi.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
-@RestController
-@RequestMapping(path = "/user")
+@Controller
 public class UserController {
 
     private final UserService userService;
@@ -20,36 +20,64 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/allusers")
-    public List<User> getUser() {
-        return userService.getUser();
+    @RequestMapping(value = "user/{userId}", method = RequestMethod.GET)
+    public String getUser(@PathVariable String userId, Model model) {
+        Integer parsedUserId = Integer.parseInt(userId);
+        User user = userService.getUserById(parsedUserId);
+        model.addAttribute(user);
+        System.out.println(user.getUserId());
+        System.out.println(user.getSeenMovies());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        model.addAttribute("currentUser", currentUser);
+
+
+        return "user";
     }
 
-//    @GetMapping(path = "/{userId}")
-//    public User getUser(@PathVariable int userId) {
-//        return userService.getUserById(userId);
-//    }
+    @RequestMapping(value = "user/{userId}/statistics", method = RequestMethod.GET)
+    public String getStatistics(@PathVariable String userId, Model model) {
 
-    @PostMapping
-    public void addMovie(@RequestBody User user) {
-        userService.addNewUser(user);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        model.addAttribute("currentUser", currentUser);
+
+
+        Integer parsedUserId = Integer.parseInt(userId);
+        User user = userService.getUserById(parsedUserId);
+        int timeSpentWatching = userService.getTimeSpentWatching(user);
+        int favoriteRealeasedYear = userService.getFavoriteRealeasedYear(user);
+        model.addAttribute("timeSpentWatching", timeSpentWatching);
+        model.addAttribute("favoriteRealeasedYear", favoriteRealeasedYear);
+        return "statistics";
     }
 
-//    @PutMapping(path = "/{userId}/movie/{movieId}")
-//    public void addSeenMovie (@PathVariable int userId, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
-//        userService.addSeenMovie(userId, movieId);
-//    }
+    @PostMapping(path = "user/{userName}/movie/{movieId}")
+    public String addSeenMovie(@PathVariable String userName, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
+        userService.addSeenMovie(userName, movieId);
 
-    @PostMapping(path = "/{userId}/movie/{movieId}")
-    public void addSeenMovie (@PathVariable int userId, @PathVariable int movieId) throws NotFoundException, IOException, InterruptedException {
-        userService.addSeenMovie(userId, movieId);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/register", method = RequestMethod.GET)
+    public String showSignUpForm(Model model) {
+        model.addAttribute("user", new User());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = authentication.getName();
+        model.addAttribute("currentUser", currentUser);
+
+
+        return "register";
+    }
+
+    @RequestMapping(path = "/registration_complete", method = RequestMethod.POST)
+    public String processRegistration(User user){
+        userService.processRegistration(user);
+        return "redirect:/";
     }
 
 
-
-    }
-
-
-
-
+}
 

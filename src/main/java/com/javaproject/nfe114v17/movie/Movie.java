@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Getter
 @Setter
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @Table
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
-
     @Id
     @JsonProperty("id")
     private int movieId;
@@ -26,15 +25,15 @@ public class Movie {
     private boolean adult;
     private long budget;
     private double popularity;
-    //private LocalDate release_date;
     private double revenue;
     private int runtime;
     private String status;
     private double vote_average;
     private double vote_count;
-
-
-
+    private String poster_path;
+    @Column(length = 10000)
+    private String overview;
+    private LocalDate release_date;
 
 
 }

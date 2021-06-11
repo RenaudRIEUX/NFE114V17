@@ -48,19 +48,7 @@ public class TmdbApiClient {
                 .build();
     }
 
-    public String searchMovie(String query) throws IOException, InterruptedException, NotFoundException {
-
-        String url = new UrlBuilder(apiKey, baseUrl).route("/search/movie").addParam("query", query).build();
-        HttpClient client = buildClient();
-        HttpRequest request = buildGetRequest(url);
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() != 200) {
-            throw new NotFoundException();
-        }
-        return response.body();
-    }
-
-    public List<Movie> searchMovie2(String query) throws IOException, InterruptedException, NotFoundException, JSONException {
+    public List<Movie> searchMovie(String query) throws IOException, InterruptedException, NotFoundException, JSONException {
         String url = new UrlBuilder(apiKey, baseUrl).route("/search/movie").addParam("query", query).build();
         HttpClient client = buildClient();
         HttpRequest request = buildGetRequest(url);
@@ -74,7 +62,13 @@ public class TmdbApiClient {
 
         for (int i = 0; i < Jarray.length(); i++) {
             JSONObject Jasonobject = Jarray.getJSONObject(i);
-            movies.add(mapper.readValue(Jasonobject.toString(), Movie.class));
+            try{
+                movies.add(mapper.readValue(Jasonobject.toString(), Movie.class));
+            }
+            catch (Error e){
+                continue;
+            }
+
         }
         return movies;
     }
