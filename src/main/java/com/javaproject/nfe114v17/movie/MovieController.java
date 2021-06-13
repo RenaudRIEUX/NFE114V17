@@ -65,12 +65,10 @@ public class MovieController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUser = authentication.getName();
             model.addAttribute("currentUser", currentUser);
-
             int parsedMovieId = Integer.parseInt(movieId);
             Movie movieById = tmdbApiClient.getMovieById(parsedMovieId);
             movieService.addNewMovie(movieById);
             model.addAttribute("movie", movieById);
-
         } catch (NotFoundException e) {
             throw e;
         }
@@ -82,10 +80,10 @@ public class MovieController {
 //        movieService.addNewMovie(movie);
 //    }
 
-    @DeleteMapping(path = "/delete/{movieId}")
-    public void deleteMovie(@PathVariable("movieId") int movieId) {
-        movieService.deleteMovie(movieId);
-    }
+//    @DeleteMapping(path = "/delete/{movieId}")
+//    public void deleteMovie(@PathVariable("movieId") int movieId) {
+//        movieService.deleteMovie(movieId);
+//    }
 
     @RequestMapping("/")
     public String home(Model model){

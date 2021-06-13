@@ -20,36 +20,31 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "user/{userId}", method = RequestMethod.GET)
-    public String getUser(@PathVariable String userId, Model model) {
-        Integer parsedUserId = Integer.parseInt(userId);
-        User user = userService.getUserById(parsedUserId);
+    @RequestMapping(value = "user/{userName}", method = RequestMethod.GET)
+    public String getUser(@PathVariable String userName, Model model) {
+        User user = userService.getUserByUserName(userName);
         model.addAttribute(user);
-        System.out.println(user.getUserId());
-        System.out.println(user.getSeenMovies());
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         model.addAttribute("currentUser", currentUser);
-
-
         return "user";
     }
 
-    @RequestMapping(value = "user/{userId}/statistics", method = RequestMethod.GET)
-    public String getStatistics(@PathVariable String userId, Model model) {
+    @RequestMapping(value = "user/{userName}/statistics", method = RequestMethod.GET)
+    public String getStatistics(@PathVariable String userName, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         model.addAttribute("currentUser", currentUser);
 
 
-        Integer parsedUserId = Integer.parseInt(userId);
-        User user = userService.getUserById(parsedUserId);
+        User user = userService.getUserByUserName(userName);
         int timeSpentWatching = userService.getTimeSpentWatching(user);
         int favoriteRealeasedYear = userService.getFavoriteRealeasedYear(user);
+        int numberOfMovies = userService.findNumberOfMovies(user);
         model.addAttribute("timeSpentWatching", timeSpentWatching);
         model.addAttribute("favoriteRealeasedYear", favoriteRealeasedYear);
+        model.addAttribute("numberOfMovies", numberOfMovies);
         return "statistics";
     }
 

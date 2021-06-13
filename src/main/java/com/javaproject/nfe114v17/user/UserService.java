@@ -33,8 +33,17 @@ public class UserService {
             throw new IllegalStateException("User with id +" + userId + " does not exists");
         }
         return optUser.get();
-
     }
+
+    public User getUserByUserName(String userName) {
+        Optional<User> optUser = userRepository.findByUserName(userName);
+        boolean exists = optUser.isPresent();
+        if (!exists) {
+            throw new IllegalStateException("User with id +" + userName + " does not exists");
+        }
+        return optUser.get();
+    }
+
 
     public void addNewUser(User user) {
         Optional<User> optUser = userRepository.findByUserName(user.getUserName());
@@ -56,8 +65,9 @@ public class UserService {
 
     public int getTimeSpentWatching(User user) {
         int timeSpentWatching = 0;
+
         for (Movie movie : user.getSeenMovies()) {
-            timeSpentWatching = +movie.getRuntime();
+            timeSpentWatching +=movie.getRuntime();
         }
         return timeSpentWatching/60;
     }
@@ -93,6 +103,15 @@ public class UserService {
     public void processRegistration(User user) {
         User tempUser = new User(user.getUserName(), user.getPassword());
         userRepository.save(tempUser);
+
+    }
+
+    public int findNumberOfMovies(User user) {
+        ArrayList<Movie> seenMovies = new ArrayList();
+        for (Movie movie : user.getSeenMovies()) {
+            seenMovies.add(movie);
+        }
+        return seenMovies.size();
 
     }
 }
